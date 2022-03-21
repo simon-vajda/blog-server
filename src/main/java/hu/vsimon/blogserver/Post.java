@@ -1,5 +1,6 @@
 package hu.vsimon.blogserver;
 
+import hu.vsimon.blogserver.user.AppUser;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
