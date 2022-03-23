@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Role {
 
     @Id
@@ -22,4 +21,8 @@ public class Role {
     @Column(name = "name", length = 20)
     @Enumerated(EnumType.STRING)
     private RoleName name;
+
+    public Role(RoleName name) {
+        this.name = name;
+    }
 }

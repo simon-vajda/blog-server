@@ -24,6 +24,4 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 8, max = 40)
     private String password;
-
-    private Collection<RoleName> roles;
 }

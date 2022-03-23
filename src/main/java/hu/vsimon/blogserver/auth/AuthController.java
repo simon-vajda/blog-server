@@ -59,7 +59,7 @@ public class AuthController {
                 .map(role -> role.getName().name())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JWTResponse(jwt, appUser.getId(), appUser.getEmail(), roles));
+        return ResponseEntity.ok(new JWTResponse(jwt, appUser.getId(), appUser.getName(), appUser.getEmail(), roles));
     }
 
     @PostMapping("/signup")
@@ -77,10 +77,8 @@ public class AuthController {
         );
 
         Collection<Role> roles = new HashSet<>();
-        for(RoleName name : request.getRoles()) {
-            Role role = roleRepository.findByName(name).orElseThrow(() -> new RuntimeException("Role '" + name + "' is nout found"));
-            roles.add(role);
-        }
+        Role role = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new RuntimeException("ROLE_USER is not found"));
+        roles.add(role);
 
         appUser.setRoles(roles);
         appUserRepository.save(appUser);
