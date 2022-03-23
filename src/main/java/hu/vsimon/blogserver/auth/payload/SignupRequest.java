@@ -13,16 +13,16 @@ import java.util.Collection;
 @Setter
 public class SignupRequest {
     @NotBlank
-    @Size(max = 40, message = "*The cannot be longer than 40 characters")
+    @Size(max = 40)
     private String name;
 
     @NotBlank
-    @Size(max = 50, message = "The email cannot be longer than 50 characters")
+    @Size(max = 50)
     @Email
     private String email;
 
     @NotBlank
-    @Size(min = 8, max = 40, message = "*The password has to be between 8 and 40 characters long")
+    @Size(min = 8, max = 40)
     private String password;
 
     private Collection<RoleName> roles;
