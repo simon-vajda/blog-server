@@ -54,5 +54,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } catch (UsernameNotFoundException e) {
             logger.error("User cannot be authenticated: {}", e.getMessage());
         }
+
+        filterChain.doFilter(request, response);
     }
 }
