@@ -9,7 +9,6 @@ import java.util.List;
 @Setter
 public class JWTResponse {
     private String token;
-    private String type = "Bearer";
     private Long id;
     private String name;
     private String email;
