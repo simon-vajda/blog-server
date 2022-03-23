@@ -65,9 +65,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@Valid @RequestBody SignupRequest request) {
         if(appUserRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("email already in use");
+            throw new EmailAlreadyUsedException();
         }
 
         AppUser appUser = new AppUser(
