@@ -9,7 +9,6 @@ import java.util.Locale;
 public class BlogServerApplication {
 
     public static void main(String[] args) {
-        Locale.setDefault(Locale.ENGLISH);
         SpringApplication.run(BlogServerApplication.class, args);
     }
 
