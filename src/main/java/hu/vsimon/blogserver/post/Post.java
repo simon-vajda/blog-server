@@ -1,4 +1,4 @@
-package hu.vsimon.blogserver;
+package hu.vsimon.blogserver.post;
 
 import hu.vsimon.blogserver.user.AppUser;
 import lombok.*;

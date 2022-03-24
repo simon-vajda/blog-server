@@ -1,6 +1,6 @@
 package hu.vsimon.blogserver.user;
 
-import hu.vsimon.blogserver.Post;
+import hu.vsimon.blogserver.post.Post;
 import hu.vsimon.blogserver.role.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
