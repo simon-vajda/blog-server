@@ -1,5 +1,6 @@
 package hu.vsimon.blogserver.post;
 
+import com.fasterxml.jackson.annotation.*;
 import hu.vsimon.blogserver.user.AppUser;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,15 +27,18 @@ public class Post {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "created_on", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_on", updatable = false)
     @CreationTimestamp
     private Timestamp createdOn;
 
-    @Column(name = "updated_on", nullable = false, insertable = false)
+    @Column(name = "updated_on")
     @UpdateTimestamp
     private Timestamp updatedOn;
 
     @ManyToOne
-    @JoinColumn(name = "app_user_id", nullable = false)
+    @JoinColumn(name = "app_user_id", nullable = false, updatable = false)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("author")
     private AppUser user;
 }
