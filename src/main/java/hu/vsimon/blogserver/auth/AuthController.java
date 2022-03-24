@@ -3,6 +3,7 @@ package hu.vsimon.blogserver.auth;
 import hu.vsimon.blogserver.auth.payload.JWTResponse;
 import hu.vsimon.blogserver.auth.payload.LoginRequest;
 import hu.vsimon.blogserver.auth.payload.SignupRequest;
+import hu.vsimon.blogserver.error.ResourceNotFoundException;
 import hu.vsimon.blogserver.role.Role;
 import hu.vsimon.blogserver.role.RoleName;
 import hu.vsimon.blogserver.role.RoleRepository;
@@ -75,7 +76,7 @@ public class AuthController {
         );
 
         Collection<Role> roles = new HashSet<>();
-        Role role = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new RuntimeException("ROLE_USER is not found"));
+        Role role = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new ResourceNotFoundException("ROLE_USER is not found"));
         roles.add(role);
 
         appUser.setRoles(roles);
