@@ -37,8 +37,6 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "app_user_id", nullable = false, updatable = false)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("author")
     private AppUser user;
 }
