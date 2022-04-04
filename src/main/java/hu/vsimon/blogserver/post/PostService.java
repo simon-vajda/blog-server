@@ -36,7 +36,7 @@ public class PostService {
     public Page<Post> findAll(int pageNumber) {
         int page = pageNumber <= 0 ? 0 : pageNumber - 1;
         Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("createdOn"));
-        return postRepository.findAllByOrderByCreatedOnDesc(pageable);
+        return postRepository.findAllByOrderByUpdatedOnDesc(pageable);
     }
 
     public void addPost(PostDTO postData, Principal principal) {
