@@ -1,5 +1,6 @@
 package hu.vsimon.blogserver.comment;
 
+import hu.vsimon.blogserver.error.ResourceNotFoundException;
 import hu.vsimon.blogserver.post.Post;
 import hu.vsimon.blogserver.post.PostService;
 import hu.vsimon.blogserver.user.AppUser;
@@ -45,5 +46,18 @@ public class CommentService {
 
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("updatedOn"));
         return commentRepository.findAllByPostOrderByUpdatedOnDesc(post, pageable);
+    }
+
+    public boolean deleteComment(long id, Principal principal) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id " + id));
+        String loggedInEmail = principal.getName();
+
+        if(!comment.getAuthor().getEmail().equals(loggedInEmail) && !appUserService.isAdmin(loggedInEmail)) {
+            return false;
+        }
+
+        commentRepository.delete(comment);
+        return true;
     }
 }

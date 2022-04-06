@@ -4,6 +4,7 @@ import hu.vsimon.blogserver.post.Post;
 import hu.vsimon.blogserver.post.PostPageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +34,15 @@ public class CommentController {
                                                    @RequestParam(required = false, name = "page", defaultValue = "0") int pageNumber) {
         Page<Comment> page = commentService.findAllByPost(postId, pageNumber);
         return ResponseEntity.ok(new CommentPageResponse(page.getNumber()+1, page.getTotalPages(), page.getTotalElements(), page.getContent()));
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<?> deleteComment(@PathVariable long commentId, Principal principal) {
+        // Only the same user can delete the comment, who created it
+        if(commentService.deleteComment(commentId, principal)) {
+            return ResponseEntity.ok("");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 }
