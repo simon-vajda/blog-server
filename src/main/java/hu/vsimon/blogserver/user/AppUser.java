@@ -1,6 +1,7 @@
 package hu.vsimon.blogserver.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hu.vsimon.blogserver.comment.Comment;
 import hu.vsimon.blogserver.post.Post;
 import hu.vsimon.blogserver.role.Role;
 import lombok.*;
@@ -42,6 +43,9 @@ public class AppUser implements UserDetails {
     @Column(name = "roles")
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author")
+    private Collection<Comment> comments;
 
     @JsonIgnore
     @Override

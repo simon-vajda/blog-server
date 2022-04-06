@@ -1,6 +1,7 @@
 package hu.vsimon.blogserver.post;
 
 import com.fasterxml.jackson.annotation.*;
+import hu.vsimon.blogserver.comment.Comment;
 import hu.vsimon.blogserver.user.AppUser;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -39,4 +41,7 @@ public class Post {
     @JoinColumn(name = "app_user_id", nullable = false, updatable = false)
     @JsonProperty("author")
     private AppUser user;
+
+    @OneToMany(mappedBy = "post")
+    private Collection<Comment> comments;
 }
