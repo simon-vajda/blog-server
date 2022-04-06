@@ -1,5 +1,7 @@
 package hu.vsimon.blogserver.user;
 
+import hu.vsimon.blogserver.role.Role;
+import hu.vsimon.blogserver.role.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,5 +24,15 @@ public class AppUserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
         return user;
+    }
+
+    public boolean isAdmin(String email) {
+        for (Role role : loadUserByUsername(email).getRoles()) {
+            if (role.getName().equals(RoleName.ROLE_ADMIN)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

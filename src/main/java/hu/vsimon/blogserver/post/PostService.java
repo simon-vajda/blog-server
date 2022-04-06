@@ -48,7 +48,9 @@ public class PostService {
 
     public boolean updatePost(long id, PostDTO postData, Principal principal) {
         Post post = find(id);
-        if(!post.getUser().getEmail().equals(principal.getName())) {
+        String loggedInEmail = principal.getName();
+
+        if(!post.getUser().getEmail().equals(loggedInEmail) && !appUserService.isAdmin(loggedInEmail)) {
             return false;
         }
 
@@ -60,7 +62,9 @@ public class PostService {
 
     public boolean deletePost(long id, Principal principal) {
         Post post = find(id);
-        if(!post.getUser().getEmail().equals(principal.getName())) {
+        String loggedInEmail = principal.getName();
+
+        if(!post.getUser().getEmail().equals(loggedInEmail) && !appUserService.isAdmin(loggedInEmail)) {
             return false;
         }
 
