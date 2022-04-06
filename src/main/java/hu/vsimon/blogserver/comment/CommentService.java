@@ -2,6 +2,7 @@ package hu.vsimon.blogserver.comment;
 
 import hu.vsimon.blogserver.error.ResourceNotFoundException;
 import hu.vsimon.blogserver.post.Post;
+import hu.vsimon.blogserver.post.PostDTO;
 import hu.vsimon.blogserver.post.PostService;
 import hu.vsimon.blogserver.user.AppUser;
 import hu.vsimon.blogserver.user.AppUserService;
@@ -28,6 +29,11 @@ public class CommentService {
         this.appUserService = appUserService;
     }
 
+    private Comment findById(long id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id " + id));
+    }
+
     public void insertComment(CommentDTO data, Principal principal) {
         Post post = postService.find(data.getPostId());
         AppUser user = appUserService.loadUserByUsername(principal.getName());
@@ -49,8 +55,7 @@ public class CommentService {
     }
 
     public boolean deleteComment(long id, Principal principal) {
-        Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id " + id));
+        Comment comment = findById(id);
         String loggedInEmail = principal.getName();
 
         if(!comment.getAuthor().getEmail().equals(loggedInEmail) && !appUserService.isAdmin(loggedInEmail)) {
@@ -58,6 +63,19 @@ public class CommentService {
         }
 
         commentRepository.delete(comment);
+        return true;
+    }
+
+    public boolean updateComment(long id, CommentDTO commentData, Principal principal) {
+        Comment comment = findById(id);
+        String loggedInEmail = principal.getName();
+
+        if(!comment.getAuthor().getEmail().equals(loggedInEmail) && !appUserService.isAdmin(loggedInEmail)) {
+            return false;
+        }
+
+        comment.setContent(commentData.getContent());
+        commentRepository.save(comment);
         return true;
     }
 }

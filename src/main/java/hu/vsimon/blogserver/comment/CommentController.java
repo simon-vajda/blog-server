@@ -1,6 +1,7 @@
 package hu.vsimon.blogserver.comment;
 
 import hu.vsimon.blogserver.post.Post;
+import hu.vsimon.blogserver.post.PostDTO;
 import hu.vsimon.blogserver.post.PostPageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,16 @@ public class CommentController {
     public ResponseEntity<?> deleteComment(@PathVariable long commentId, Principal principal) {
         // Only the same user can delete the comment, who created it
         if(commentService.deleteComment(commentId, principal)) {
+            return ResponseEntity.ok("");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
+
+    @PutMapping("/{commentId}")
+    public ResponseEntity<?> updatePost(@PathVariable long commentId, @Valid @RequestBody CommentDTO comment, Principal principal) {
+        // Only the same user can update the post, who created it
+        if(commentService.updateComment(commentId, comment, principal)) {
             return ResponseEntity.ok("");
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
