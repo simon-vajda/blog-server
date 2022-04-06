@@ -16,7 +16,6 @@ import java.sql.Timestamp;
 
 @Service
 public class PostService {
-    private final int PAGE_SIZE = 20;
     private final PostRepository postRepository;
     private final AppUserService appUserService;
     private final ModelMapper modelMapper;
@@ -35,7 +34,8 @@ public class PostService {
 
     public Page<Post> findAll(int pageNumber) {
         int page = pageNumber <= 0 ? 0 : pageNumber - 1;
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("createdOn"));
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("createdOn"));
         return postRepository.findAllByOrderByUpdatedOnDesc(pageable);
     }
 
