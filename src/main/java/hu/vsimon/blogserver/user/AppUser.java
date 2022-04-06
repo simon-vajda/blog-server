@@ -44,6 +44,7 @@ public class AppUser implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
     private Collection<Comment> comments;
 

@@ -1,6 +1,7 @@
 package hu.vsimon.blogserver.comment;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.vsimon.blogserver.post.Post;
 import hu.vsimon.blogserver.user.AppUser;
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
+    @JsonIgnore
     private Post post;
 
     @ManyToOne

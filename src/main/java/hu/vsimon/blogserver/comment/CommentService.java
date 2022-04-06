@@ -5,6 +5,10 @@ import hu.vsimon.blogserver.post.PostService;
 import hu.vsimon.blogserver.user.AppUser;
 import hu.vsimon.blogserver.user.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -32,5 +36,14 @@ public class CommentService {
         comment.setAuthor(user);
         comment.setPost(post);
         commentRepository.save(comment);
+    }
+
+    public Page<Comment> findAllByPost(long postId, int pageNumber) {
+        int page = pageNumber <= 0 ? 0 : pageNumber - 1;
+        int pageSize = 5;
+        Post post = postService.find(postId);
+
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("updatedOn"));
+        return commentRepository.findAllByPostOrderByUpdatedOnDesc(post, pageable);
     }
 }
