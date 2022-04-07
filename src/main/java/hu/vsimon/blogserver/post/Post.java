@@ -37,11 +37,12 @@ public class Post {
     @UpdateTimestamp
     private Timestamp updatedOn;
 
+    @JsonProperty("author")
     @ManyToOne
     @JoinColumn(name = "app_user_id", nullable = false, updatable = false)
-    @JsonProperty("author")
     private AppUser user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "post")
     private Collection<Comment> comments;
 }
