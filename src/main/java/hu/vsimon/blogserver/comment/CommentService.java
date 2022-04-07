@@ -34,7 +34,7 @@ public class CommentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id " + id));
     }
 
-    public void insertComment(CommentDTO data, Principal principal) {
+    public Comment insertComment(CommentDTO data, Principal principal) {
         Post post = postService.find(data.getPostId());
         AppUser user = appUserService.loadUserByUsername(principal.getName());
 
@@ -42,7 +42,7 @@ public class CommentService {
         comment.setContent(data.getContent());
         comment.setAuthor(user);
         comment.setPost(post);
-        commentRepository.save(comment);
+        return commentRepository.save(comment);
     }
 
     public Page<Comment> findAllByPost(long postId, int pageNumber) {
@@ -66,16 +66,15 @@ public class CommentService {
         return true;
     }
 
-    public boolean updateComment(long id, CommentDTO commentData, Principal principal) {
+    public Comment updateComment(long id, CommentDTO commentData, Principal principal) {
         Comment comment = findById(id);
         String loggedInEmail = principal.getName();
 
         if(!comment.getAuthor().getEmail().equals(loggedInEmail) && !appUserService.isAdmin(loggedInEmail)) {
-            return false;
+            return null;
         }
 
         comment.setContent(commentData.getContent());
-        commentRepository.save(comment);
-        return true;
+        return commentRepository.save(comment);
     }
 }

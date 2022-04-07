@@ -26,8 +26,8 @@ public class CommentController {
 
     @PostMapping()
     public ResponseEntity<?> insertComment(@Valid @RequestBody CommentDTO comment, Principal principal) {
-        commentService.insertComment(comment, principal);
-        return ResponseEntity.ok("");
+        Comment newComment = commentService.insertComment(comment, principal);
+        return ResponseEntity.ok(newComment);
     }
 
     @GetMapping()
@@ -49,9 +49,10 @@ public class CommentController {
 
     @PutMapping("/{commentId}")
     public ResponseEntity<?> updatePost(@PathVariable long commentId, @Valid @RequestBody CommentDTO comment, Principal principal) {
+        Comment updatedComment = commentService.updateComment(commentId, comment, principal);
         // Only the same user can update the post, who created it
-        if(commentService.updateComment(commentId, comment, principal)) {
-            return ResponseEntity.ok("");
+        if(updatedComment != null) {
+            return ResponseEntity.ok(updatedComment);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
