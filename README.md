@@ -13,12 +13,13 @@ This is a fullstack blog web application using the following technologies:
 ### Functionality
 
 - Login and Registration (form validation)
-- Listing all posts (with pagination and infinite scroll)
-- Create, Edit, Delete posts
+- View blog posts and comments (both with pagination and infinite scroll)
+- Create, edit and delete posts and comments
 - User permissions
-    - Every action requires a logged in user, except for viewing posts
-    - Only the same user can edit/delete a post who created it
-    - Users with ADMIN role can edit/delete anything
+  - Unauthenticated visitors can view the posts and comments
+  - Create, edit and delete actions require a logged in user
+  - Only the same user can edit/delete an item who created it
+  - Users with ADMIN role can edit/delete anything
 
 ### You can try it out here (Hosted on Microsoft Azure)
 
@@ -28,6 +29,6 @@ This is a fullstack blog web application using the following technologies:
   You can register with a fake email address as long as it's the right format.<br>
   (Admin user login: admin@admin.com - admin123)
 
-### Frontend repo
+### Backend repo
 
 https://github.com/simon-vajda/blog-client
