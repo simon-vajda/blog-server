@@ -21,14 +21,13 @@ This is a fullstack blog web application using the following technologies:
   - Only the same user can edit/delete an item who created it
   - Users with ADMIN role can edit/delete anything
 
-### You can try it out here (Hosted on Microsoft Azure)
+### You can try it out here (Hosted on my NAS using Docker. My Azure subscription expired)
 
-- [Frontend](https://zealous-dune-0654bd403.1.azurestaticapps.net/)
-- [Backend Rest API](https://blog-server.azurewebsites.net/api/v1/post)
+- [vsimon.hu/spring-react-blog](https://www.vsimon.hu/spring-react-blog/)
 
   You can register with a fake email address as long as it's the right format.<br>
   (Admin user login: admin@admin.com - admin123)
 
-### Backend repo
+### Frontend repo
 
 https://github.com/simon-vajda/blog-client
